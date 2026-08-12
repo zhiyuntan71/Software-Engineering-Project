@@ -1,0 +1,26 @@
+### View profile
+GET http://127.0.0.1:8080/api/profile
+Accept: application/json
+
+
+### Update profile
+PUT http://127.0.0.1:8080/api/profile
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Ryan Yip Updated",
+  "handphoneNumber": "98765432",
+  "carTypeModel": "Tesla Model 3"
+}
+
+### Register user
+POST http://127.0.0.1:8080/api/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "john.doe1000@example.com",
+  "username": "johndoe1234",
+  "password": "SecurePass21!"
+}

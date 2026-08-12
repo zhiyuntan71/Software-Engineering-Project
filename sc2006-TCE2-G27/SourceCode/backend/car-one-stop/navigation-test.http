@@ -1,0 +1,46 @@
+### Start a session
+GET http://127.0.0.1:8080/api/profile
+Accept: application/json
+
+{
+  "startLat": 1.3483,
+  "startLng": 103.6831,
+  "destLat": 1.3521,
+  "destLng": 103.8198,
+  "destinationLabel": "Test Destination"
+}
+
+### Ping (replace sessionId with response from start)
+POST http://127.0.0.1:8080/api/navigation/ping
+Authorization: Basic dXNlcjowMmI4YTIzYi0zM2U3LTQ0M2ItODA3Ni03NDFkMGU4NGEzMGI=
+Content-Type: application/json
+Accept: application/json
+
+{
+  "sessionId": 1,
+  "timestamp": "2026-03-05T00:00:00Z",
+  "lat": 1.34835,
+  "lng": 103.68315,
+  "speedMps": 2.3,
+  "headingDeg": 90.0,
+  "accuracyM": 5.0
+}
+
+### Stop (replace sessionId)
+POST http://127.0.0.1:8080/api/navigation/stop
+Authorization: Basic dXNlcjowMmI4YTIzYi0zM2U3LTQ0M2ItODA3Ni03NDFkMGU4NGEzMGI=
+Content-Type: application/json
+Accept: application/json
+
+{
+  "sessionId": 1
+}
+
+### List sessions
+GET http://127.0.0.1:8080/api/navigation/sessions
+Authorization: Basic dXNlcjowMmI4YTIzYi0zM2U3LTQ0M2ItODA3Ni03NDFkMGU4NGEzMGI=
+Accept: application/json
+
+### Session detail (replace id)
+GET http://127.0.0.1:8080/api/navigation/sessions/1
+Accept: application/json

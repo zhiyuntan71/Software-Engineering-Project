@@ -1,0 +1,90 @@
+@baseUrl=http://localhost:8080/api
+@testEmail=ryanyh01@gmail.com
+@testUsername=RyanYip2
+@testPassword=Singapore50@
+
+### AUTH 1) Register user (run once; repeat may return 409 if already exists)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "ryanyh01@gmail.com",
+  "username": "RyanYip2",
+  "password": "Singapore50@",
+  "carType": "ELECTRIC",
+  "carModel": "TESLA_MODEL_3",
+  "chargingType": "CCS"
+}
+
+###
+
+### AUTH 2) Login user
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+> {%
+  if (response.body && response.body.token) {
+    client.global.set("token", response.body.token);
+  }
+%}
+
+### 1) Get wallet balance
+GET {{baseUrl}}/wallet/balance
+Authorization: Bearer {{token}}
+
+###
+
+### 2) Top up by CARD
+POST {{baseUrl}}/wallet/top-up
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 20,
+  "paymentMethod": "CARD"
+}
+
+###
+
+### 3) Top up by PAYNOW
+POST {{baseUrl}}/wallet/top-up
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "amount": 20,
+  "paymentMethod": "PAYNOW"
+}
+
+###
+
+### 4) Get transactions
+GET {{baseUrl}}/wallet/transactions
+Authorization: Bearer {{token}}
+
+###
+
+### 5) Negative test: invalid amount (should fail)
+POST {{baseUrl}}/wallet/top-up
+Content-Type: application/json
+
+{
+  "amount": 3,
+  "paymentMethod": "CARD"
+}
+
+###
+
+### 6) Negative test: invalid payment method (should fail enum bind)
+POST {{baseUrl}}/wallet/top-up
+Content-Type: application/json
+
+{
+  "amount": 20,
+  "paymentMethod": "QR"
+}

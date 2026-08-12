@@ -1,0 +1,7 @@
+### Map search
+GET http://127.0.0.1:8080/api/map/search?query=NTU
+Accept: application/json
+
+### Nearby facilities
+GET http://127.0.0.1:8080/api/map/nearby?type=CARPARK&lat=1.3483&lng=103.6831&radius=2000
+Accept: application/json
